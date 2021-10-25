@@ -11,11 +11,11 @@
 ![Bash](/homeworks-1/bash.png)
 
 **Markdown:**
-![Markdown](/homeworks-1/Markdown.png)
+![Markdown](/homeworks-1/markdown.png)
 
 **Yaml:**
 ![Yaml](/homeworks-1/yaml.png)
 
 **Jsonnet:**
-![Jsonnet](/homeworks-1/Jsonnet.png)
+![Jsonnet](/homeworks-1/jsonnet.png)
 
