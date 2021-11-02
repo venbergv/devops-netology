@@ -26,7 +26,8 @@ origin	git@github.com:vitaly-grebnev/devops-netology.git (push)
 
 ```bash
 git push -u gitlab main
-git push -u bitbucket main```
+git push -u bitbucket main
+```
 
 ## Задание №2 – Теги
 
