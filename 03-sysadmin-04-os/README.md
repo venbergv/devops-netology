@@ -24,7 +24,8 @@ vagrant@vagrant:~/soft$ cd node_exporter-1.3.0.linux-amd64
 Description=Node Exporter
   
 [Service]
-ExecStart=/usr/local/bin/node_exporter 
+EnvironmentFile=-/etc/sysconfig/node_exporter
+ExecStart=/usr/local/bin/node_exporter $OPTIONS
   
 [Install]
 WantedBy=multi-user.target
