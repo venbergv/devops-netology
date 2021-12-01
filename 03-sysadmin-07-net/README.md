@@ -14,7 +14,7 @@ vagrant@vagrant:~$
 ```
 
 *Для Linux -* `ip link`.  
-*Для Windows -* `ipcofig`.
+*Для Windows -* `ipconfig`.
 
 ---
 
