@@ -295,7 +295,7 @@ vagrant@vagrant:~$
 
 Ответ.
 
-![Моя сеть](03-sysadmin-08-net/img/1.png)
+![Моя сеть](/03-sysadmin-08-net/img/1.png)
 
 ---
 
