@@ -22,7 +22,7 @@
 Ответ.
 
 
-*Добавляем перенаправление порттов для нашей виртуальной машины в vagrant файле.*  
+*Добавляем перенаправление портов для нашей виртуальной машины в vagrant файле.*  
 ```
 config.vm.network "forwarded_port", guest: 443, host: 1443
 ```
@@ -73,6 +73,8 @@ Syntax OK
 vagrant@vagrant:~$ sudo systemctl restart apache2
 vagrant@vagrant:~$
 ```
+   
+*Проверяем!*   
 
 ![Наш сервер](/03-sysadmin-09-security/img/hw39-2.png)  
 
