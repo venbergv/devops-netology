@@ -235,4 +235,116 @@ vagrant@vagrant:~$
 ![Wireshark](/03-sysadmin-09-security/img/hw39-3.png)
 
 ---
+8*. Просканируйте хост scanme.nmap.org. Какие сервисы запущены?
+---
+
+Ответ.
+
+*Устанавливаем* `nmap`.
+
+```
+vagrant@vagrant:~$ sudo apt install nmap
+```
+
+*Проводим сканирование.*
+
+```
+vagrant@vagrant:~$ nmap -sV scanme.nmap.org
+Starting Nmap 7.80 ( https://nmap.org ) at 2021-12-08 14:14 UTC
+Nmap scan report for scanme.nmap.org (45.33.32.156)
+Host is up (0.18s latency).
+Other addresses for scanme.nmap.org (not scanned): 2600:3c01::f03c:91ff:fe18:bb2f
+Not shown: 993 closed ports
+PORT      STATE    SERVICE      VERSION
+22/tcp    open     ssh          OpenSSH 6.6.1p1 Ubuntu 2ubuntu2.13 (Ubuntu Linux; protocol 2.0)
+80/tcp    open     http         Apache httpd 2.4.7 ((Ubuntu))
+135/tcp   filtered msrpc
+139/tcp   filtered netbios-ssn
+445/tcp   filtered microsoft-ds
+9929/tcp  open     nping-echo   Nping echo
+31337/tcp open     tcpwrapped
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 29.37 seconds
+vagrant@vagrant:~$ 
+```
+
+*Можно так же провести агрессивное сканирование.*  
+```
+vagrant@vagrant:~$ nmap -A scanme.nmap.org
+```
+
+
+---
+9*. Установите и настройте фаервол ufw на web-сервер из задания 3. Откройте доступ снаружи только к портам 22,80,443
+---
+
+Ответ.
+
+*Проверяем состояние ufw на нашем тестовом сервере.*
+
+```
+vagrant@vagrant:~$ sudo ufw status
+Status: inactive
+vagrant@vagrant:~$
+```
+
+*Сервис установлен и неактивен.*   
+*Изменяем настройки по умолчанию и добавляем нужные порты.*  
+
+```
+vagrant@vagrant:~$ sudo ufw default deny incoming
+Default incoming policy changed to 'deny'
+(be sure to update your rules accordingly)
+vagrant@vagrant:~$ sudo ufw default allow outgoing
+Default outgoing policy changed to 'allow'
+(be sure to update your rules accordingly)
+vagrant@vagrant:~$ sudo ufw allow 22/tcp
+Rules updated
+Rules updated (v6)
+vagrant@vagrant:~$ sudo ufw allow 80/tcp
+Rules updated
+Rules updated (v6)
+vagrant@vagrant:~$ sudo ufw allow 443/tcp
+Rules updated
+Rules updated (v6)
+vagrant@vagrant:~$ 
+```
+
+*Проверяем список сервисов.*
+
+```
+vagrant@vagrant:~$ sudo ufw app list
+Available applications:
+  Apache
+  Apache Full
+  Apache Secure
+  OpenSSH
+vagrant@vagrant:~$
+```
+
+*Запускаем сервис и проверяем состояние.*
+
+```
+vagrant@vagrant:~$ sudo ufw enable
+Command may disrupt existing ssh connections. Proceed with operation (y|n)? y
+Firewall is active and enabled on system startup
+vagrant@vagrant:~$ sudo ufw status verbose
+Status: active
+Logging: on (low)
+Default: deny (incoming), allow (outgoing), disabled (routed)
+New profiles: skip
+
+To                         Action      From
+--                         ------      ----
+22/tcp                     ALLOW IN    Anywhere                  
+80/tcp                     ALLOW IN    Anywhere                  
+443/tcp                    ALLOW IN    Anywhere                  
+22/tcp (v6)                ALLOW IN    Anywhere (v6)             
+80/tcp (v6)                ALLOW IN    Anywhere (v6)             
+443/tcp (v6)               ALLOW IN    Anywhere (v6)             
+
+vagrant@vagrant:~$ 
+```
 
