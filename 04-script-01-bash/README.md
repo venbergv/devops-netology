@@ -92,7 +92,7 @@ done
 
 Ответ.
 
-```
+```bash
 #!/usr/bin/env bash
 echo "Start check hosts" > chk_host.log
 date >> chk_host.log
@@ -119,23 +119,19 @@ done
 
 Ответ.
 
-```
+```bash
 #!/usr/bin/env bash
-echo "Start check hosts" > chk_host.log
-date >> chk_host.log
 array_hosts=(192.168.0.1 173.194.222.113 87.250.250.24)
 timeout=3
-for h in ${array_hosts[@]}
+while ((1==1))
 do
-  for i in {1..5}
+  for h in ${array_hosts[@]}
   do
     curl -s --connect-timeout $timeout $h:80 >/dev/null
     if (($? != 0))
       then
-        echo "Host" $h "Failed" "status" $? >> error
+        echo "Host" $h "Failed" "status" $? > error
         exit 1
-      else
-        echo "Host" $h "Sucsess" "status" $? >> chk_host.log
       fi
   done
 done
