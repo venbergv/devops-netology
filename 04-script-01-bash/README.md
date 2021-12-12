@@ -81,7 +81,7 @@ do
   then
     date >> curl.log
   elthe
-    breack
+    break
   fi
   sleep 10
 done
