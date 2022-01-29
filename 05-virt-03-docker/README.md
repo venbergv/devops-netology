@@ -99,7 +99,7 @@ Successfully tagged hw53:latest
 vagrant@server1:~/53$ 
 ```
 
-Запускаем наш контейнер. И проверяем работу **nginx**.
+Запускаем наш контейнер. И проверяем работу ***nginx***.
 
 ```bash
 vagrant@server1:~/53$ docker run --name my-hw53 -d -p 8080:80 hw53
@@ -121,21 +121,30 @@ vagrant@server1:~/53$
 Загружаем обрраз в мой репозиторий.  
 
 ```bash
-vagrant@server1:~/53$ docker tag hw53:latest venbergv/netology:latest
-vagrant@server1:~/53$ docker push venbergv/netology:latest
-The push refers to repository [docker.io/venbergv/netology]
-b5bab0e01f57: Layer already exists 
-6fda88393b8b: Layer already exists 
-a770f8eba3cb: Layer already exists 
-318191938fd7: Layer already exists 
-89f4d03665ce: Layer already exists 
-67bae81de3dc: Layer already exists 
-8d3ac3489996: Layer already exists 
-latest: digest: sha256:d2b80fcaa81f83ccfaf0594e48bab31f95cea6a0151cb0ad60d4f319a273a584 size: 1775
+vagrant@server1:~/53$ docker images
+REPOSITORY   TAG             IMAGE ID       CREATED          SIZE
+hw53         latest          ac66c0d2d0f1   18 seconds ago   23.2MB
+nginx        stable-alpine   373f8d4d4c60   2 months ago     23.2MB
+vagrant@server1:~/53$ docker tag hw53:latest venbergv/netology-devops:hw53
+vagrant@server1:~/53$ docker images
+REPOSITORY                 TAG             IMAGE ID       CREATED              SIZE
+hw53                       latest          ac66c0d2d0f1   About a minute ago   23.2MB
+venbergv/netology-devops   hw53            ac66c0d2d0f1   About a minute ago   23.2MB
+nginx                      stable-alpine   373f8d4d4c60   2 months ago         23.2MB
+vagrant@server1:~/53$ docker push venbergv/netology-devops:hw53
+The push refers to repository [docker.io/venbergv/netology-devops]
+7fb5296e9d9e: Pushed 
+6f44c5b5d074: Mounted from library/nginx 
+002fcf848e67: Mounted from library/nginx 
+e419fa208fe1: Mounted from library/nginx 
+112ee9c2903a: Mounted from library/nginx 
+68e5252d0d33: Mounted from library/nginx 
+1a058d5342cc: Mounted from library/nginx 
+hw53: digest: sha256:c390bc7a9720b95489a8aacba629733c805b78250cb2d30a4aba9c2a6cab7b8f size: 1775
 vagrant@server1:~/53$ 
 ```
 
-[Мой репозиторий] (https://hub.docker.com/r/venbergv/netology)
+[Мой репозиторий] (https://hub.docker.com/r/venbergv/netology-devops)
 
 
 ---
@@ -212,7 +221,7 @@ Docker будет подходящим выбором. Так же будет у
 ***Ответ.***
 
 
-Создаем папку **data**.
+Создаем папку ***data***.
 
 Будем запускать контейнеры в интерактивном режиме.
 
@@ -244,7 +253,7 @@ Status: Downloaded newer image for debian:latest
 root@35c08355b2d1:/# 
 ```
 
-В первом терминале, находясь в сессии centos, добавляем **centos_file.txt**
+В первом терминале, находясь в сессии centos, добавляем ***centos_file.txt***
 
 ```bash
 [root@636ff39a69a6 /]# touch /data/centos_file.txt
