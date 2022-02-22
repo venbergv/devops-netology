@@ -298,11 +298,16 @@ test_database=#
 / # pg_dump -U postgres -d test_database > /var/tmp/test_database_dump.sql
 ```
 
-Чтобы добавить уникальность значения столбца `title` для таблиц `test_database` предлагаю изменить  
-`title character varying(80),`  
-на  
-`title character varying(80) UNIQUE,`  
+Чтобы добавить уникальность значения столбца `title` для таблиц `test_database` предлагаю изменить:
+ 
+`title character varying(80),`
+
+на:
+
+`title character varying(80) UNIQUE,`
+
 в резервной копии.
+
 ---
 
 
