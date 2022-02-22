@@ -36,6 +36,7 @@ services:
       - "5432:5432"
     volumes:
       - "./docker/db/data:/var/lib/postgresql/data"
+      - "./docker/db/backup:/var/tmp"
 ```
 
 Понимаем контейнер с `PostgreSQL 13`.
