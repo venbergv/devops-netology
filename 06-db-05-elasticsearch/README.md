@@ -68,7 +68,7 @@ CMD ["/elasticsearch-7.17.0/bin/elasticsearch"]
 vagrant@server1:~/65/651$ 
 ```
 
-***- текст elasticsearch.yml***
+**- текст elasticsearch.yml**
 
 ```bash
 vagrant@server1:~/65/651$ grep "^[^#*/;]" elasticsearch.yml 
@@ -80,6 +80,10 @@ path.repo: /elasticsearch-7.17.0/snapshots
 network.host: 0.0.0.0
 discovery.seed_hosts: ["127.0.0.1", "[::1]"]
 ```
+
+**- ссылка на образ в репозитории dockerhub**
+
+[hub.docker.com](https://hub.docker.com/layers/venbergv/netology-devops/651/images/sha256-a1dbf1086162a2381f6e703719e29d73771975cb2617e98ad3e5bcd495e2d720?context=repo)
 
 **- ответ `elasticsearch` на запрос пути `/` в json виде**
 
