@@ -142,7 +142,7 @@ bash-4.4$
 4. В ответе присылаем файл `maven-metadata.xml` для этого артефекта
 
 ---
-![nexus](/09-ci-02-cicd/img/2.png)
+![nexus](/09-ci-02-cicd/img/3.png)
 
 
 ![maven-metadata.xml](/09-ci-02-cicd/img/maven-metadata.xml)
@@ -152,8 +152,41 @@ bash-4.4$
 ### Подготовка к выполнению
 
 1. Скачиваем дистрибутив с [maven](https://maven.apache.org/download.cgi)
+
+```bash
+vagrant@server1:~/92/mvn$ wget https://dlcdn.apache.org/maven/maven-3/3.8.5/binaries/apache-maven-3.8.5-bin.tar.gz
+--2022-05-16 19:45:42--  https://dlcdn.apache.org/maven/maven-3/3.8.5/binaries/apache-maven-3.8.5-bin.tar.gz
+Resolving dlcdn.apache.org (dlcdn.apache.org)... 151.101.2.132, 2a04:4e42::644
+Connecting to dlcdn.apache.org (dlcdn.apache.org)|151.101.2.132|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 8673123 (8.3M) [application/x-gzip]
+Saving to: ‘apache-maven-3.8.5-bin.tar.gz’
+
+apache-maven-3.8.5-bin.tar.gz   100%[====================================================>]   8.27M  8.59MB/s    in 1.0s    
+
+2022-05-16 19:45:43 (8.59 MB/s) - ‘apache-maven-3.8.5-bin.tar.gz’ saved [8673123/8673123]
+
+vagrant@server1:~/92/mvn$
+```
+
 2. Разархивируем, делаем так, чтобы binary был доступен через вызов в shell (или меняем переменную PATH или любой другой удобный вам способ)
+
+```bash
+vagrant@server1:~/92/mvn/bin$ export PATH=$PATH:$(pwd)
+```
+
 3. Проверяем `mvn --version`
+
+```bash
+vagrant@server1:~/92/mvn/bin$ mvn --version
+Apache Maven 3.8.5 (3599d3414f046de2324203b78ddcf9b5e4388aa0)
+Maven home: /home/vagrant/92/mvn
+Java version: 11.0.15, vendor: Private Build, runtime: /usr/lib/jvm/java-11-openjdk-amd64
+Default locale: en_US, platform encoding: UTF-8
+OS name: "linux", version: "5.4.0-91-generic", arch: "amd64", family: "unix"
+vagrant@server1:~/92/mvn/bin$
+```
+
 4. Забираем директорию [mvn](./mvn) с pom
 
 ### Основная часть
@@ -161,12 +194,23 @@ bash-4.4$
 1. Меняем в `pom.xml` блок с зависимостями под наш артефакт из первого пункта задания для Nexus (java с версией 8_282)
 2. Запускаем команду `mvn package` в директории с `pom.xml`, ожидаем успешного окончания
 3. Проверяем директорию `~/.m2/repository/`, находим наш артефакт
+
+```bash
+vagrant@server1:~/92$ ls -la ~/.m2/repository/netology/java/8_282/
+total 20
+drwxrwxr-x 2 vagrant vagrant 4096 May 16 20:13 .
+drwxrwxr-x 3 vagrant vagrant 4096 May 16 20:13 ..
+-rw-rw-r-- 1 vagrant vagrant    0 May 16 20:13 java-8_282-distrib.tar.gz
+-rw-rw-r-- 1 vagrant vagrant   40 May 16 20:13 java-8_282-distrib.tar.gz.sha1
+-rw-rw-r-- 1 vagrant vagrant  382 May 16 20:13 java-8_282.pom.lastUpdated
+-rw-rw-r-- 1 vagrant vagrant  175 May 16 20:13 _remote.repositories
+vagrant@server1:~/92$
+```
+
 4. В ответе присылаем исправленный файл `pom.xml`
 
----
-
-### Как оформить ДЗ?
-
-Выполненное домашнее задание пришлите ссылкой на .md-файл в вашем репозитории.
+![pom.xml](/09-ci-02-cicd/mvn/pom.xml)
 
 ---
+
+
