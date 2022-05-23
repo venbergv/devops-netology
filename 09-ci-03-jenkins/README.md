@@ -36,28 +36,35 @@ May 21 19:48:27 server2 jenkins[16860]: 2022-05-21 19:48:27.107+0000 [id=45]    
 
 root@server2:/home/vagrant#
 ```
+
 ---
 
 2. Запустить и проверить работоспособность
 
 ---
+
 ![Работоспособность Jenkins](/09-ci-03-jenkins/img/1.png)
+
 ---
 
 3. Сделать первоначальную настройку
 4. Настроить под свои нужды
 5. Поднять отдельный cloud
 
+---
+
 ```bash
 vagrant@server2:~$ chmod 777 /var/run/docker.sock
 ```
----
+
 ![Мой Cloud](/09-ci-03-jenkins/img/2.png)
+
 ---
 
 6. Для динамических агентов можно использовать [образ](https://hub.docker.com/repository/docker/aragast/agent)
 
 ---
+
 ```bash
 vagrant@server2:~$ docker pull aragast/agent:7
 7: Pulling from aragast/agent
@@ -71,19 +78,22 @@ Status: Downloaded newer image for aragast/agent:7
 docker.io/aragast/agent:7
 vagrant@server2:~$
 ```
+
 ---
 
 7. Обязательный параметр: поставить label для динамических агентов: `ansible_docker`
 
 ---
+
 ![Настройка динамических агентов](/09-ci-03-jenkins/img/3.png)
+
 ---
 
 8.  Сделать форк репозитория с [playbook](https://github.com/aragastmatb/example-playbook)
 
 ---
-Проведя более 10 часов, в попытках получить рабочую сборку и сделав более 20 нерабочих сборок, решил отказаться от использования 'secret' и 'ansible-vault.  
-Т.к. ДЗ все же не об ключах git и умении их пропихивать в готовый docker образ.
+
+Проведя более 10 часов, в попытках получить рабочую сборку и сделав более 20 нерабочих сборок, решил отказаться от использования 'secret' и 'ansible-vault. Т.к. ДЗ все же не об ключах git и умении их пропихивать в готовый docker образ.
 
 **Изменил `requirements.yml`:**
 
@@ -217,8 +227,8 @@ localhost                  : ok=5    changed=4    unreachable=0    failed=0    s
 [Pipeline] // node
 [Pipeline] End of Pipeline
 Finished: SUCCESS
-
 ```
+
 ---
 
 3. Перенести Declarative Pipeline в репозиторий в файл `Jenkinsfile`
@@ -335,6 +345,7 @@ localhost                  : ok=5    changed=4    unreachable=0    failed=0    s
 [Pipeline] End of Pipeline
 Finished: SUCCESS
 ```
+
 ---
 
 5. Создать Scripted Pipeline, наполнить его скриптом из [pipeline](./pipeline)
@@ -450,6 +461,7 @@ localhost                  : ok=5    changed=4    unreachable=0    failed=0    s
 Finished: SUCCESS
 
 ```
+
 ---
 
 8. Отправить ссылку на репозиторий в ответе
