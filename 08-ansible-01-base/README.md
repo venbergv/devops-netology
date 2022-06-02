@@ -423,7 +423,7 @@ ubuntu                     : ok=3    changed=0    unreachable=0    failed=0    s
 
 ***Ответ.***
 
-[Заполненый `README.md`](https://github.com/venbergv/devops-netology/tree/main/08-ansible-01-base/)
+[Заполненый `README.md`](https://github.com/venbergv/devops-netology/blob/main/08-ansible-01-base/playbook/README.md)
 
 ---
 
