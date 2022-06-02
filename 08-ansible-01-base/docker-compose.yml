@@ -1,0 +1,16 @@
+version: '3.7'
+services:
+  ubuntu:
+    image: pycontribs/ubuntu:latest
+    container_name: ubuntu
+    restart: always
+    command:
+      - sleep
+      - infinity
+  centos7:
+    image: pycontribs/centos:7
+    container_name: centos7
+    restart: always
+    command:
+      - sleep
+      - infinity
