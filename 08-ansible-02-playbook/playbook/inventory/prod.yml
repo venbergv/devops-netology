@@ -1,0 +1,7 @@
+---
+clickhouse:
+  hosts:
+    clickhouse-01:
+      ansible_host: srv-study-c7
+      ansible_connection: ssh
+      ansible_ssh_user: root
