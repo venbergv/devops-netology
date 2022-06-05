@@ -272,6 +272,12 @@ clickhouse-01              : ok=7    changed=0    unreachable=0    failed=0    s
 
 ---
 
+***Ответ.***
+
+**Ссылка на соответствующий [тег](https://github.com/venbergv/devops-netology/releases/tag/08-ansible-02-playbook)**
+
+---
+
 ### Как оформить ДЗ?
 
 Выполненное домашнее задание пришлите ссылкой на .md-файл в вашем репозитории.
