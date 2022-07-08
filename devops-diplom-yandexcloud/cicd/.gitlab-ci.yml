@@ -1,0 +1,20 @@
+before_script:
+
+  - eval $(ssh-agent -s)
+
+  - echo "$ssh_key" | tr -d '\r' | ssh-add -
+
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+
+stages:
+  - deploy
+
+deploy-job:
+  stage: deploy
+  script:
+    - echo "Deploying application"
+    - ssh -o StrictHostKeyChecking=no ubuntu@app.venbergv.fun sudo chown ubuntu /var/www/wordpress/ -R
+    - rsync -vz -e "ssh -o StrictHostKeyChecking=no" ./wp/* ubuntu@app.venbergv.fun:/var/www/wordpress/
+    - ssh -o StrictHostKeyChecking=no ubuntu@app.venbergv.fun rm -rf /var/www/wordpress/.git
+    - ssh -o StrictHostKeyChecking=no ubuntu@app.venbergv.fun sudo chown www-data /var/www/wordpress/ -R
