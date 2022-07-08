@@ -35,43 +35,43 @@ $ terraform apply -auto-approve
 
 Время выполнения приблизительно 20-40 минут.
 
-![](/img/complete.png)
+![](/devops-diplom-yandexcloud/img/complete.png)
 
 После выполнения можем увидеть следующее: 
 
 Виртуальные машины в **YandexCloud**
-![](/img/vm-cloud.png)
+![](/devops-diplom-yandexcloud/img/vm-cloud.png)
 
 Записи DNS нашего домена в **YandexCloud**
-![](/img/vm-cloud.png)
+![](/devops-diplom-yandexcloud/img/vm-cloud.png)
 
 Наш основной сайт, с автоматически сгенерированным проектом `Experimental`
-![](/img/app1.png)
+![](/devops-diplom-yandexcloud/img/app1.png)
 
 Мониторинг всей нашей системы:
 
 1. Prometheus
-![](/img/prometheus1.png)
+![](/devops-diplom-yandexcloud/img/prometheus1.png)
 
-![](/img/prometheus2.png)
+![](/devops-diplom-yandexcloud/img/prometheus2.png)
 
-![](/img/prometheus3.png)
+![](/devops-diplom-yandexcloud/img/prometheus3.png)
 
 2. Alertmanager
-![](/img/alertm1.png)
+![](/devops-diplom-yandexcloud/img/alertm1.png)
 
-![](/img/alertm3.png)
+![](/devops-diplom-yandexcloud/img/alertm3.png)
 
 3. Grafana
-![](/img/grafana1.png)
+![](/devops-diplom-yandexcloud/img/grafana1.png)
 
-![](/img/grafana2.png)
+![](/devops-diplom-yandexcloud/img/grafana2.png)
 
 Локальный Gitlab-CE и предустановленный Gitlab-runner
 
-![](/img/gitlab1.png)
+![](/devops-diplom-yandexcloud/img/gitlab1.png)
 
-![](/img/runner1.png)
+![](/devops-diplom-yandexcloud/img/runner1.png)
 
 
 ---
@@ -81,9 +81,9 @@ $ terraform apply -auto-approve
 1. Создаем новый проект в `Gitlab`.  
 Для этого используем импорт по URL. [Мой проект](https://github.com/venbergv/dp-cicd.git)
 
-![](/img/gitlab2.png)
+![](/devops-diplom-yandexcloud/img/gitlab2.png)
 
-![](/img/gitlab3.png)
+![](/devops-diplom-yandexcloud/img/gitlab3.png)
 
 Мой .gitlab-ci.yml
 
@@ -108,9 +108,9 @@ deploy-job:
 3. Добавляем tag 1.0.0 согласно заданию.  
 4. Проверяем успешное выполнение `pipeline`  
 
-![](/img/gitlab5.png)
+![](/devops-diplom-yandexcloud/img/gitlab5.png)
 
-![](/img/gitlab6.png)
+![](/devops-diplom-yandexcloud/img/gitlab6.png)
 
 ---
 После окончания всех работ, для экономии средств, выполняем в каталоге `terraform` следующую команду.
