@@ -5,12 +5,13 @@
 
 ### Подготовительные действия:
 
-1. Заведен аккаунт в YandexCloud
+1. Заведен аккаунт в YandexCloud.
 2. Сгенерированы необходимые ключи доступа в YandexCloud.
 3. Создан Object Storage.
-4. У регистратора [reg.ru](https://reg.ru) зарегистрирован домен `venbergv.fun`
-5. Домен делегирован под управление `ns1.yandexcloud.net` и `ns2.yandexcloud.net`
-6. Создан worckspace 'stage'.
+4. У регистратора [reg.ru](https://reg.ru) зарегистрирован домен `venbergv.fun`.
+5. Домен делегирован под управление `ns1.yandexcloud.net` и `ns2.yandexcloud.net`.
+6. Создан `worckspace` 'stage'.
+
 ```bash
 $ cd terraform
 $ terraform workspace new stage
@@ -20,12 +21,13 @@ $ terraform workspace list
   prod
 * stage
 ```
-7. Перед началом развертывания все переменные в файле `variables.tf` должны быть заполнены соответствующими значениям.
-8. Опционально можно изменить параметры уровня [производительности машин](https://cloud.yandex.ru/docs/compute/concepts/performance-levels). По умолчанию для `stage` определен уровень 20%.
+
+8. Перед началом развертывания все переменные в файле `variables.tf` должны быть заполнены соответствующими значениям.
+9. Опционально можно изменить параметры уровня [производительности машин](https://cloud.yandex.ru/docs/compute/concepts/performance-levels). По умолчанию для `stage` определен уровень 20%.
 
 ### Создание инфраструктуры
 
-Если workspace уже создан, то достаточно выполнить следующее.
+***Если workspace уже создан, то достаточно выполнить следующее.***
 
 ```bash
 $ terraform init
@@ -33,59 +35,64 @@ $ terraform plan
 $ terraform apply -auto-approve
 ```
 
-Время выполнения приблизительно 20-40 минут.
+***Время выполнения приблизительно 20-40 минут.***
 
 ![](/devops-diplom-yandexcloud/img/complete.png)
 
 После выполнения можем увидеть следующее: 
 
-Виртуальные машины в **YandexCloud**
+**Виртуальные машины в YandexCloud.**
+
 ![](/devops-diplom-yandexcloud/img/vm-cloud.png)
 
-Записи DNS нашего домена в **YandexCloud**
+**Записи DNS нашего домена в YandexCloud.**
+
 ![](/devops-diplom-yandexcloud/img/vm-cloud.png)
 
-Наш основной сайт, с автоматически сгенерированным проектом `Experimental`
+**Наш основной сайт, с автоматически сгенерированным проектом `Experimental`.**
+
 ![](/devops-diplom-yandexcloud/img/app1.png)
 
-Мониторинг всей нашей системы:
+**Мониторинг всей нашей системы:**
 
-1. Prometheus
+1. **Prometheus**
+
 ![](/devops-diplom-yandexcloud/img/prometheus1.png)
 
 ![](/devops-diplom-yandexcloud/img/prometheus2.png)
 
 ![](/devops-diplom-yandexcloud/img/prometheus3.png)
 
-2. Alertmanager
+2. **Alertmanager**
+
 ![](/devops-diplom-yandexcloud/img/alertm1.png)
 
 ![](/devops-diplom-yandexcloud/img/alertm3.png)
 
-3. Grafana
+3. **Grafana**
+
 ![](/devops-diplom-yandexcloud/img/grafana1.png)
 
 ![](/devops-diplom-yandexcloud/img/grafana2.png)
 
-Локальный Gitlab-CE и предустановленный Gitlab-runner
+***Локальный Gitlab-CE и предустановленный Gitlab-runner***
 
 ![](/devops-diplom-yandexcloud/img/gitlab1.png)
 
 ![](/devops-diplom-yandexcloud/img/runner1.png)
 
-
 ---
 
 ### Gitlab CE и Gitlab Runner
 
-1. Создаем новый проект в `Gitlab`.  
-Для этого используем импорт по URL. [Мой проект](https://github.com/venbergv/dp-cicd.git)
+**1. Создаем новый проект в `Gitlab`.**  
+***Для этого используем импорт по URL. [Мой проект](https://github.com/venbergv/dp-cicd.git)***
 
 ![](/devops-diplom-yandexcloud/img/gitlab2.png)
 
 ![](/devops-diplom-yandexcloud/img/gitlab3.png)
 
-Мой .gitlab-ci.yml
+**Мой .gitlab-ci.yml**
 
 ```
 stages:
@@ -104,16 +111,16 @@ deploy-job:
 
 ```
 
-2. Привязываем наш текущий `runner` к нашему проекту.  
-3. Добавляем tag 1.0.0 согласно заданию.  
-4. Проверяем успешное выполнение `pipeline`  
+2. **Привязываем наш текущий `runner` к нашему проекту.**  
+3. **Добавляем tag 1.0.0 согласно заданию.**
+4. **Проверяем успешное выполнение `pipeline`.**  
 
 ![](/devops-diplom-yandexcloud/img/gitlab5.png)
 
 ![](/devops-diplom-yandexcloud/img/gitlab6.png)
 
 ---
-После окончания всех работ, для экономии средств, выполняем в каталоге `terraform` следующую команду.
+***После окончания всех работ, для экономии средств, выполняем в каталоге `terraform` следующую команду.***
 
 ```bash
 $ terraform destroy -auto-approve 
