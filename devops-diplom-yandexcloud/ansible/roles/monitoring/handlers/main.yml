@@ -1,0 +1,62 @@
+---
+# handlers file for roles/monitoring
+- name: restart prometheus
+  become: true
+  systemd:
+    daemon_reload: true
+    enabled: yes
+    name: prometheus
+    state: restarted
+
+- name: reload prometheus
+  become: true
+  systemd:
+    name: prometheus
+    state: reloaded
+
+- name: restart alertmanager
+  service:
+    name: alertmanager
+    state: restarted
+
+- name: reload alertmanager
+  service:
+    name: alertmanager
+    state: reloaded
+
+- name: restart alertmanager
+  become: true
+  systemd:
+    daemon_reload: yes
+    enabled: yes
+    name: alertmanager
+    state: restarted
+
+#- name: reload systemd and restart alertmanager
+#  command: systemctl daemon-reload
+#  notify: restart alertmanager
+
+- name: restart grafana
+  become: true
+  service:
+    name: grafana-server
+    state: restarted
+
+- name: Set privileges on provisioned dashboards
+  become: true
+  file:
+    path: "{{ grafana_data_dir }}/dashboards"
+    recurse: true
+    owner: grafana
+    group: grafana
+    mode: 0640
+  listen: "provisioned dashboards changed"
+
+- name: Set privileges on provisioned dashboards directory
+  become: true
+  file:
+    path: "{{ grafana_data_dir }}/dashboards"
+    state: directory
+    recurse: false
+    mode: 0755
+  listen: "provisioned dashboards changed"

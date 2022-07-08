@@ -1,0 +1,99 @@
+---
+- name: Create local grafana dashboard directory
+  tempfile:
+    state: directory
+  register: _tmp_dashboards
+  changed_when: false
+  check_mode: false
+
+- name: create grafana dashboards data directory
+  file:
+    path: "{{ grafana_data_dir }}/dashboards"
+    state: directory
+    owner: grafana
+    group: grafana
+    mode: 0755
+
+- name: download grafana dashboard from grafana.net to local directory
+  command: >
+    curl --fail --compressed
+    https://grafana.com/api/dashboards/{{ item.dashboard_id }}/revisions/{{ item.revision_id }}/download
+    -o {{ _tmp_dashboards.path }}/{{ item.dashboard_id }}.json
+  args:
+    creates: "{{ _tmp_dashboards.path }}/{{ item.dashboard_id }}.json"
+    warn: false
+  register: _download_dashboards
+  until: _download_dashboards is succeeded
+  retries: 5
+  delay: 2
+  with_items: "{{ grafana_dashboards }}"
+  when: grafana_dashboards | length > 0
+  changed_when: false
+  check_mode: false
+
+- name: Set the correct data source name in the dashboard
+  replace:
+    dest: "{{ _tmp_dashboards.path }}/{{ item.dashboard_id }}.json"
+    regexp: '"(?:\${)?DS_[A-Z0-9_-]+(?:})?"'
+    replace: '"{{ item.datasource }}"'
+  changed_when: false
+  with_items: "{{ grafana_dashboards }}"
+  when: grafana_dashboards | length > 0
+
+- name: Create/Update dashboards file (provisioning)
+  copy:
+    dest: "/etc/grafana/provisioning/dashboards/ansible.yml"
+    content: |
+      apiVersion: 1
+      providers:
+       - name: 'default'
+         orgId: 1
+         folder: ''
+         type: file
+         options:
+           path: "{{ grafana_data_dir }}/dashboards"
+    backup: false
+    owner: root
+    group: grafana
+    mode: 0644
+  notify: restart grafana
+
+- name: Register previously copied dashboards
+  find:
+    paths: "{{ grafana_data_dir }}/dashboards"
+    hidden: true
+    patterns:
+      - "*.json"
+  register: _dashboards_present
+  when: grafana_provisioning_synced
+
+- name: Register dashboards to copy
+  find:
+    paths: "{{ _tmp_dashboards.path }}"
+    patterns:
+      - "*"
+  register: _dashboards_to_copy
+
+- name: Import grafana dashboards
+  copy:
+    src: "{{ item.path }}"
+    dest: "{{ grafana_data_dir }}/dashboards"
+    remote_src: yes
+  with_items:
+    - "{{ _dashboards_to_copy.files }}"
+  register: _dashboards_copied
+  notify: "provisioned dashboards changed"
+
+- name: Get dashboard lists
+  set_fact:
+    _dashboards_present_list: "{{ _dashboards_present | json_query('files[*].path') | default([]) }}"
+    _dashboards_copied_list: "{{ _dashboards_copied | json_query('results[*].dest') | default([]) }}"
+  when: grafana_provisioning_synced
+
+- name: Remove dashboards not present on deployer machine (synchronize)
+  become: true
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items: "{{ _dashboards_present_list | difference( _dashboards_copied_list ) }}"
+  when: grafana_provisioning_synced

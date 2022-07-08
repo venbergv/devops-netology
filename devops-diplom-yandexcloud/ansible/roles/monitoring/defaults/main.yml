@@ -1,0 +1,65 @@
+# defaults file for roles/monitoring
+grafana_admin_password: "T@rT@ria0"
+#"P@ssW0rd"
+
+grafana_datasources: 
+  - name: "Prometheus"
+    type: "prometheus"
+    access: "proxy"
+    url: "http://localhost:9090"
+    isDefault: true
+
+grafana_dashboards: 
+  - dashboard_id: '3662'
+    revision_id: '2'
+    datasource: 'Prometheus'
+  - dashboard_id: '1860'
+    revision_id: '27'
+    datasource: 'Prometheus'
+  - dashboard_id: '9578'
+    revision_id: '4'
+    datasource: 'Prometheus'
+  - dashboard_id: '9628'
+    revision_id: '7'
+    datasource: 'Prometheus'
+
+grafana_data_dir: "/var/lib/grafana"
+grafana_dashboards_dir: "dashboards"
+grafana_provisioning_synced: false
+
+alertmanager_release_url: "https://github.com/prometheus/alertmanager/releases/download/v0.24.0/alertmanager-0.24.0.linux-amd64.tar.gz"
+alertmanager_user: "{{ prometheus_user }}"
+alertmanager_group: "{{ prometheus_group }}"
+alertmanager_install_path: "/opt"
+alertmanager_bin_path: "/usr/local/bin"
+
+alertmanager_config_path: "/etc/alertmanager"
+alertmanager_config_file: "alertmanager.yml"
+alertmanager_config: {}
+alertmanager_templates_path: "{{ alertmanager_config_path }}/templates"
+alertmanager_listen_address: "0.0.0.0:9093"
+alertmanager_storage_path: "/var/lib/alertmanager"
+alertmanager_storage_retention: "120h"
+alertmanager_log_level: "info"
+alertmanager_additional_cli_args: ""
+
+prometheus_user: "prometheus"
+prometheus_group: "prometheus"
+
+prometheus_version: 2.36.2
+prometheus_binary_local_dir: ''
+prometheus_skip_install: false
+prometheus_binary_install_dir: '/usr/local/bin'
+prometheus_config_dir: /etc/prometheus
+prometheus_db_dir: /var/lib/prometheus
+prometheus_read_only_dirs: []
+
+prometheus_web_listen_address: "0.0.0.0:9090"
+prometheus_web_external_url: ''
+prometheus_storage_retention: "30d"
+prometheus_storage_retention_size: "0"
+prometheus_config_flags_extra: {}
+
+prometheus_config_file: 'prometheus.yml.j2'
+
+

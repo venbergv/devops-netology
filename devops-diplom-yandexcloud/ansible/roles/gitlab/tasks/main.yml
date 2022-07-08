@@ -1,0 +1,59 @@
+---
+- name: Install GitLab dependencies.
+  apt: name={{ item }} update_cache=yes state=present
+  loop: "{{ gitlab_modules }}"
+
+- name: Download GitLab repository installation script.
+  get_url:
+    url: "{{ gitlab_repository_installation_script_url }}"
+    dest: /tmp/gitlab_install_repository.sh
+
+- name: Install GitLab repository.
+  command: bash /tmp/gitlab_install_repository.sh
+  register: output
+
+- name: Install GitLab.
+  apt:
+    name: "{{ gitlab_edition }}"
+    state: present
+
+- name: modify prometheus
+  lineinfile:
+     path: /etc/gitlab/gitlab.rb
+     search_string: "external_url 'http://gitlab.example.com'"
+     line: "external_url 'http://gitlab.{{ my_domain }}'"
+#     backup: yes
+
+- name: modify node_exporter
+  lineinfile:
+     path: /etc/gitlab/gitlab.rb
+     search_string: "node_exporter['listen_address']"
+     line: "node_exporter['listen_address'] = '0.0.0.0:9100'"
+#     backup: yes
+
+- name: modify prometheus
+  lineinfile:
+     path: /etc/gitlab/gitlab.rb
+     search_string: "prometheus['listen_address']"
+     line: "prometheus['listen_address'] = '0.0.0.0:9090'"
+#     backup: yes
+
+- name: modify runner token
+  lineinfile:
+    path: /etc/gitlab/gitlab.rb
+    line: "gitlab_rails['initial_shared_runners_registration_token'] = '{{ my_gitlab_runner }}'"
+
+
+- name: modify root password
+  lineinfile:
+    path: /etc/gitlab/gitlab.rb
+    line: "gitlab_rails['initial_root_password'] = '{{ my_gitlab_psw }}'"
+
+# Start and configure GitLab. Sometimes the first run fails, but after that,
+# restarts fix problems, so ignore failures on this run.
+- name: Reconfigure GitLab (first run).
+  command: >
+    gitlab-ctl reconfigure
+    creates=/var/opt/gitlab/bootstrapped
+  failed_when: false
+

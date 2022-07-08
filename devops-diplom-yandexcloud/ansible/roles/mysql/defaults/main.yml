@@ -1,0 +1,7 @@
+---
+db_user: wordpress
+db_pass: wordpress
+db_name: wordpress
+mysql_replication_master: db01
+mysql_replication_user: replicator
+mysql_replication_user_password: "{{ my_replicator_psw }}"

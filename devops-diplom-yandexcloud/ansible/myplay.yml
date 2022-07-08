@@ -1,0 +1,85 @@
+---
+#
+- hosts: nginx
+  become:
+    true
+  become_method:
+    sudo
+  become_user:
+    root
+  remote_user:
+    ubuntu
+  roles:
+   - nginx
+   - nodeexporter
+  vars:
+    nginx_user: www-data
+
+#
+- hosts: mydb
+  become:
+    true
+  become_method:
+    sudo
+  become_user:
+    root
+  remote_user:
+    ubuntu
+  roles:
+   - mysql
+   - nodeexporter
+
+#
+- hosts: app
+  become:
+    true
+  become_method:
+    sudo
+  become_user:
+    root
+  remote_user:
+    ubuntu
+  roles:
+   - wordpress
+   - nodeexporter
+
+#
+- hosts: gitlab
+  become:
+    true
+  become_method:
+    sudo
+  become_user:
+    root
+  remote_user:
+    ubuntu
+  roles:
+   - gitlab
+
+#
+- hosts: runner
+  become:
+    true
+  become_method:
+    sudo
+  become_user:
+    root
+  remote_user:
+    ubuntu
+  roles:
+   - runner
+   - nodeexporter
+
+#
+- hosts: monitoring
+  become:
+    true
+  become_method:
+    sudo
+  become_user:
+    root
+  remote_user:
+    ubuntu
+  roles:
+   - monitoring
+   - nodeexporter
