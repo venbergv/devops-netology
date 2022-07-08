@@ -1,6 +1,6 @@
 # defaults file for roles/monitoring
-grafana_admin_password: "T@rT@ria0"
-#"P@ssW0rd"
+grafana_admin_password: "{{ my_grafana_psw }}"
+
 
 grafana_datasources: 
   - name: "Prometheus"
