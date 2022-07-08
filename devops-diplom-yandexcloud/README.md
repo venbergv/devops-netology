@@ -43,11 +43,11 @@ $ terraform apply -auto-approve
 
 **Виртуальные машины в YandexCloud.**
 
-![](/devops-diplom-yandexcloud/img/vm-cloud.png)
+![](/devops-diplom-yandexcloud/img/vm.png)
 
 **Записи DNS нашего домена в YandexCloud.**
 
-![](/devops-diplom-yandexcloud/img/vm-cloud.png)
+![](/devops-diplom-yandexcloud/img/dns.png)
 
 **Наш основной сайт, с автоматически сгенерированным проектом `Experimental`.**
 
